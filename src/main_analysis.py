@@ -330,9 +330,25 @@ class EcommerceConversionAnalyzer:
         converters = self.df_sessions[self.df_sessions['converted'] == 1]['session_duration_sec']
         non_converters = self.df_sessions[self.df_sessions['converted'] == 0]['session_duration_sec']
 
-        print(f"\n Session Duration Analysis:")
+        print(f"\nSession Duration Analysis:")
         print(f"Converters: {converters.mean():.2f}s (median: {converters.median():.2f}s)")
         print(f"Non-converters: {non_converters.mean():.2f}s (median: {non_converters.median():.2f}s)")
         
+        t_stat, p_val = ttest_ind(converters, non_converters)
+        print(f"T-test: t={t_stat:.4f}, p={p_val:.4f}")
         
+        # Products viewed analysis
+        products_conv = self.df_sessions[self.df_sessions['converted'] == 1]['unique_products_viewed']
+        products_non_conv = self.df_sessions[self.df_sessions['converted'] == 0]['unique_products_viewed']
+        
+        print(f"\nProducts Viewed Analysis:")
+        print(f"Converters: {products_conv.mean():.2f} products (median: {products_conv.median():.2f})")
+        print(f"Non-converters: {products_non_conv.mean():.2f} products (median: {products_non_conv.median():.2f})")
+        
+        return self
 
+    def analyze_category_patterns(self):
+        """Analyze conversion by product category"""
+
+        #Conversion by category
+        

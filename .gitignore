@@ -1,13 +1,19 @@
 # E-Commerce Conversion Analysis - Git Ignore File
 
 # Data files (too large for Git)
+# Ignore any datasets under top-level data/ (add exceptions below if needed)
+data/**
+!data/.gitkeep
+!data/README.md
+
+# If you organize into subfolders, these stay ignored explicitly as well
 data/raw/*.csv
 data/raw/*.parquet
 data/raw/*.zip
 data/processed/*.csv
 data/processed/*.parquet
 
-# Keep directory structure
+# Keep directory structure for known subfolders
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 
