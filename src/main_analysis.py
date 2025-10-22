@@ -66,7 +66,7 @@ class EcommerceConversionAnalyzer:
         print("\n" + "=" * 80)
         print("STEP 2: DATA UNDERSTANDING")
         print("=" * 80)
-        
+        pd.set_option('display.float_format', '{:.6f}'.format)
         # Basic info
         print("\nDataset Overview:")
         print(self.df.info())
@@ -430,13 +430,23 @@ class EcommerceConversionAnalyzer:
         )
         
         # User type
-        new_rate = self.df_sessions[self.df_sessions['is_returning_user'] == 0]['converted'].mean() * 100
-        returning_rate = self.df_sessions[self.df_sessions['is_returning_user'] == 1]['converted'].mean() * 100
-        lift = ((returning_rate / new_rate) - 1) * 100 if new_rate > 0 else 0
-        insights.append(
-            f"Returning users convert at {returning_rate:.2f}% vs new users at {new_rate:.2f}%, "
-            f"representing a {lift:.1f}% lift - emphasizing value of retention strategies."
-        )
+        new_users = self.df_sessions[self.df_sessions['is_returning_user'] == 0]
+        returning_users = self.df_sessions[self.df_sessions['is_returning_user'] == 1]
+        
+        new_rate = new_users['converted'].mean() * 100 if len(new_users) > 0 else 0
+        returning_rate = returning_users['converted'].mean() * 100 if len(returning_users) > 0 else 0
+        
+        if len(returning_users) > 0 and len(new_users) > 0:
+            lift = ((returning_rate / new_rate) - 1) * 100 if new_rate > 0 else 0
+            insights.append(
+                f"Returning users convert at {returning_rate:.2f}% vs new users at {new_rate:.2f}%, "
+                f"representing a {lift:.1f}% lift - emphasizing value of retention strategies."
+            )
+        else:
+            insights.append(
+                f"All users are new users with a {new_rate:.2f}% conversion rate. "
+                f"No returning user data available for comparison - highlighting opportunity for retention strategies."
+            )
         
         # Session engagement
         conv_duration = self.df_sessions[self.df_sessions['converted'] == 1]['session_duration_sec'].median()
