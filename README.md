@@ -493,8 +493,8 @@ Contributions are welcome! Please follow these steps:
 ## 👨‍💻 Author
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/OnlyAhad13)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/syedahad13)
+- GitHub: (https://github.com/OnlyAhad13)
+- LinkedIn: (https://linkedin.com/in/syedahad13)
 - Email: abdulahad17100@gmail.com
 
 ---
